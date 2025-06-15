@@ -7,5 +7,5 @@ int main(int, char**)
 {
     ImageProcessor imgProcessor;
 
-    std::cout << "Hello, from major_final!\n";
+    //std::cout << "Hello, from major_final!\n";
 }
