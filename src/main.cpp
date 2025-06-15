@@ -9,17 +9,28 @@ int main(int, char**)
     imgProcessor.makeGrid();
 
     std::vector<std::vector<int>> grid = imgProcessor.getGrid();
-    for(auto& row : grid)
+    // for(auto& row : grid)
+    // {
+    //     for(auto& cell : row)
+    //     {
+    //         if(cell == 0)
+    //             std::cout << " ";
+    //         else
+    //             std::cout << "*";
+    //     }
+    //     std::cout << std::endl;
+    // }
+
+    cv::Mat visual(cv::Size(grid[0].size(), grid.size()), CV_8UC1);
+    for(int i = 0; i < grid.size(); i++)
     {
-        for(auto& cell : row)
+        for(int j = 0; j < grid[i].size(); j++)
         {
-            if(cell == 0)
-                std::cout << " ";
-            else
-                std::cout << "*";
+            visual.at<uchar>(i, j) = (grid[i][j] == 0) ? 255 : 0; // 0 for passable, 255 for impassable
         }
-        std::cout << std::endl;
     }
+    cv::imshow("Grid Visual", visual);
+    cv::waitKey(0);
 
     return 0;
     //std::cout << "Hello, from major_final!\n";
