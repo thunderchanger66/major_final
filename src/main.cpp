@@ -6,6 +6,8 @@
 int main(int, char**)
 {
     ImageProcessor imgProcessor;
+    imgProcessor.showRawMat();
 
+    return 0;
     //std::cout << "Hello, from major_final!\n";
 }

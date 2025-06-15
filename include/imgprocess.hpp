@@ -8,6 +8,8 @@ public:
     ImageProcessor();
     ~ImageProcessor();
 
+    void showRawMat();
+
 private:
     cv::Mat image;// 源图
 };
