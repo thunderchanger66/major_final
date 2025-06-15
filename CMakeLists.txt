@@ -8,7 +8,10 @@ set(
 )
 find_package(OpenCV REQUIRED)
 
-add_executable(major_final src/main.cpp)
+add_executable(major_final 
+    src/main.cpp
+    src/imgprocess.cpp
+)
 
 target_include_directories(major_final 
     PRIVATE 
