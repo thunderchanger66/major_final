@@ -8,16 +8,20 @@ PathPlanner::PathPlanner() : ImageProcessor(), rows(grid.size()), cols(grid[0].s
 
 void PathPlanner::zigzagSweep()
 {
-    for(int i = 0; i < rows; i++)
+    for(int i = 0; i < rows; i+=7)//这里i跳的行数和小车的大小有关
     {
         //偶数行从左往右，否则从右往左
         if(i % 2 == 0)
         {
             for(int j = 0; j < cols; j++)
             {
-                if(grid[i][j] == 0 && !visited[i][j])
+                // if(grid[i][j] == 0 && !visited[i][j])
+                // {
+                //     //visited[i][j] = true;//已经访问
+                //     path.emplace_back(i, j); //添加到路径中
+                // }
+                if(grid[i][j] == 0)//不需要已经访问了，在A*中会处理
                 {
-                    visited[i][j] = true;//已经访问
                     path.emplace_back(i, j); //添加到路径中
                 }
             }
@@ -26,9 +30,8 @@ void PathPlanner::zigzagSweep()
         {
             for(int j = cols - 1; j >= 0; j--)
             {
-                if(grid[i][j] == 0 && !visited[i][j])
+                if(grid[i][j] == 0)
                 {
-                    visited[i][j] = true;//已经访问
                     path.emplace_back(i, j); //添加到路径中
                 }
             }
@@ -50,3 +53,4 @@ void PathPlanner::showPath()
     }
     //cv::imshow("Path Visual", visual);
 }
+
