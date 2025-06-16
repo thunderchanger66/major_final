@@ -14,7 +14,7 @@ ImageProcessor::ImageProcessor()
     {
         cv::namedWindow("Raw Image", cv::WINDOW_NORMAL);
         cv::imshow("Raw Image", image);
-        cv::waitKey(0);
+        //cv::waitKey(0);
     }
 
     // Initialize grid with zeros

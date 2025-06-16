@@ -1,25 +1,17 @@
 #include <iostream>
 
 #include <opencv2/opencv.hpp>
-#include <imgprocess.hpp>
+#include "imgprocess.hpp"
+#include "pathplan.hpp"
 
 int main(int, char**)
 {
-    ImageProcessor imgProcessor;
-    imgProcessor.makeGrid();
+    //ImageProcessor imgProcessor;
+    //imgProcessor.makeGrid();
 
-    std::vector<std::vector<int>> grid = imgProcessor.getGrid();
-    // for(auto& row : grid)
-    // {
-    //     for(auto& cell : row)
-    //     {
-    //         if(cell == 0)
-    //             std::cout << " ";
-    //         else
-    //             std::cout << "*";
-    //     }
-    //     std::cout << std::endl;
-    // }
+    PathPlanner pathPlanner;
+
+    std::vector<std::vector<int>> grid = pathPlanner.getGrid();
 
     cv::Mat visual(cv::Size(grid[0].size(), grid.size()), CV_8UC1);
     for(int i = 0; i < grid.size(); i++)
