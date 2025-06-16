@@ -55,3 +55,18 @@ void ImageProcessor::makeGrid()
                 grid[i][j] = 1;//不可通行         
         }
 }
+
+void ImageProcessor::showGrid()
+{
+    cv::Mat visual(cv::Size(grid[0].size(), grid.size()), CV_8UC1);
+    cv::namedWindow("Grid Visual", cv::WINDOW_NORMAL);
+    for(int i = 0; i < grid.size(); i++)
+    {
+        for(int j = 0; j < grid[i].size(); j++)
+        {
+            visual.at<uchar>(i, j) = (grid[i][j] == 0) ? 255 : 0; // 0 for passable, 255 for impassable
+        }
+    }
+    cv::imshow("Grid Visual", visual);
+    //cv::waitKey(0);
+}

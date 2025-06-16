@@ -12,10 +12,13 @@ public:
     void showRawMat();
     void makeGrid();
 
-    std::vector<std::vector<int>> getGrid() const { return grid; }
+    // 直接public
+    std::vector<std::vector<int>> grid;// 网格数据，0表示可通行，1表示不可通行
+    //std::vector<std::vector<int>> getGrid() const { return grid; }
+
+    void showGrid();
 
 private:
     cv::Mat image;// 源图
-    std::vector<std::vector<int>> grid;// 网格数据，0表示可通行，1表示不可通行
 
 };
