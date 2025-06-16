@@ -13,7 +13,7 @@ void PathPlanner::zigzagSweep()
         //偶数行从左往右，否则从右往左
         if(i % 2 == 0)//这里的j++和j--为了消去一些点
         {
-            for(int j = 0; j < cols; j++)
+            for(int j = 0; j < cols; j+=7)
             {
                 if(grid[i][j] == 0 && !visited[i][j])
                 {
@@ -28,7 +28,7 @@ void PathPlanner::zigzagSweep()
         }
         else
         {
-            for(int j = cols - 1; j >= 0; j--)
+            for(int j = cols - 1; j >= 0; j-=7)
             {
                 if(grid[i][j] == 0 && !visited[i][j])
                 {
