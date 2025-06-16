@@ -2,7 +2,7 @@
 
 PathPlanner::PathPlanner() : ImageProcessor(), rows(grid.size()), cols(grid[0].size())
 {
-    //makeGrid();//必须先拿到栅格地图
+    makeGrid();//必须先拿到栅格地图
     visited.resize(grid.size(), std::vector<bool>(grid[0].size(), false));
 }
 

@@ -74,6 +74,6 @@ void Astar::showAStarPath(const std::vector<std::pair<int, int>>& path, const st
         int y = p.second;
         visual.at<cv::Vec3b>(x, y) = cv::Vec3b(0, 0, 255); // 红色表示路径点
         cv::imshow("FinalPath Visual", visual);
-        cv::waitKey(1);
+        //cv::waitKey(1);
     }
 }

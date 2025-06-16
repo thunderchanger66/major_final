@@ -10,7 +10,7 @@ public:
     ~ImageProcessor();
 
     void showRawMat();
-    //void makeGrid();
+    void makeGrid();
 
     // 直接public
     std::vector<std::vector<int>> grid;// 网格数据，0表示可通行，1表示不可通行
@@ -20,5 +20,5 @@ public:
 
 private:
     cv::Mat image;// 源图
-    void makeGrid();
+    cv::Mat dilated;// 膨胀后的图，需对障碍物进行膨胀处理
 };

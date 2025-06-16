@@ -19,8 +19,15 @@ ImageProcessor::ImageProcessor()
 
     // Initialize grid with zeros
     grid.resize(image.rows, std::vector<int>(image.cols, 0));
-    makeGrid();//必须先拿到栅格地图
+    //makeGrid();//必须先拿到栅格地图
 
+    //直接膨胀
+    //dilated = image.clone();
+    cv::Mat obstacleMask = (image == 0);// 障碍物的掩码
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
+    cv::dilate(obstacleMask, dilated, kernel);
+    cv::namedWindow("Dilated Image", cv::WINDOW_NORMAL);
+    cv::imshow("Dilated Image", dilated);
 }
 
 ImageProcessor::~ImageProcessor()
