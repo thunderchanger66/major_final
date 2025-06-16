@@ -22,7 +22,7 @@ void start()
             continue;
         }
         // 对于后续点，使用A*算法连接前后点
-        std::vector<std::pair<int, int>> subPath = astar.findPath(pathPlanner.grid, zigzagPath[i - 1], zigzagPath[i]);
+        std::vector<std::pair<int, int>> subPath = astar.findPath(pathPlanner.dilatedgrid, zigzagPath[i - 1], zigzagPath[i]);
         if(!subPath.empty())
         {
             //如果找到路径，将其加入完整路径中

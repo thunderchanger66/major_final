@@ -2,7 +2,7 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
-ImageProcessor::ImageProcessor()
+ImageProcessor::ImageProcessor(int dilateSize)
 {
     //cv::Mat image = cv::imread("E:\\STUDY\\Junior.down\\major_final\\map\\carto_map.pgm", cv::IMREAD_UNCHANGED);
     image = cv::imread("E:\\STUDY\\Junior.down\\major_final\\map\\map2.png", cv::IMREAD_GRAYSCALE);
@@ -21,11 +21,17 @@ ImageProcessor::ImageProcessor()
     grid.resize(image.rows, std::vector<int>(image.cols, 0));
     //makeGrid();//必须先拿到栅格地图
 
+    cv::Mat binary;
+    cv::threshold(image, binary, 230, 255, cv::THRESH_BINARY_INV); // 将图像二值化
+
     //直接膨胀
     //dilated = image.clone();
-    cv::Mat obstacleMask = (image == 0);// 障碍物的掩码
-    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
-    cv::dilate(obstacleMask, dilated, kernel);
+    //cv::Mat obstacleMask = (image == 0);// 障碍物的掩码
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(dilateSize, dilateSize));
+    cv::dilate(binary, dilated, kernel);
+
+    dilatedgrid.resize(dilated.rows, std::vector<int>(dilated.cols, 0));// 膨胀后的网格数据
+
     cv::namedWindow("Dilated Image", cv::WINDOW_NORMAL);
     cv::imshow("Dilated Image", dilated);
 }
@@ -62,6 +68,18 @@ void ImageProcessor::makeGrid()
                 grid[i][j] = 0;//可通行
             else
                 grid[i][j] = 1;//不可通行         
+        }
+}
+
+void ImageProcessor::makeDilatedGrid()
+{
+    for(int i = 0; i < dilated.rows; i++)
+        for(int j = 0; j < dilated.cols; j++)
+        {
+            if((int)dilated.at<uchar>(i, j) == 0)//这里0表示可通行区域
+                dilatedgrid[i][j] = 0;//可通行
+            else
+                dilatedgrid[i][j] = 1;//不可通行         
         }
 }
 

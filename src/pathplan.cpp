@@ -1,21 +1,22 @@
 #include "pathplan.hpp"
 
-PathPlanner::PathPlanner() : ImageProcessor(), rows(grid.size()), cols(grid[0].size())
+PathPlanner::PathPlanner() : ImageProcessor(9), rows(grid.size()), cols(grid[0].size())
 {
     makeGrid();//必须先拿到栅格地图
-    visited.resize(grid.size(), std::vector<bool>(grid[0].size(), false));
+    makeDilatedGrid();//生成膨胀后的栅格地图，现在路径规划正式改用膨胀后的栅格地图
+    visited.resize(dilatedgrid.size(), std::vector<bool>(dilatedgrid[0].size(), false));
 }
 
 void PathPlanner::zigzagSweep()
 {
-    for(int i = 0; i < rows; i+=7)//这里i跳的行数和小车的大小有关
+    for(int i = 0; i < rows; i+=9)//这里i跳的行数和小车的大小有关
     {
         //偶数行从左往右，否则从右往左
         if(i % 2 == 0)//这里的j++和j--为了消去一些点
         {
-            for(int j = 0; j < cols; j+=7)
+            for(int j = 0; j < cols; j+=5)
             {
-                if(grid[i][j] == 0 && !visited[i][j])
+                if(dilatedgrid[i][j] == 0 && !visited[i][j])
                 {
                     visited[i][j] = true;//已经访问
                     path.emplace_back(i, j); //添加到路径中
@@ -28,9 +29,9 @@ void PathPlanner::zigzagSweep()
         }
         else
         {
-            for(int j = cols - 1; j >= 0; j-=7)
+            for(int j = cols - 1; j >= 0; j-=5)
             {
-                if(grid[i][j] == 0 && !visited[i][j])
+                if(dilatedgrid[i][j] == 0 && !visited[i][j])
                 {
                     visited[i][j] = true;//已经访问
                     path.emplace_back(i, j); //添加到路径中
