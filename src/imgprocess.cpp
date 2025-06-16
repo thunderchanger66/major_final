@@ -19,6 +19,8 @@ ImageProcessor::ImageProcessor()
 
     // Initialize grid with zeros
     grid.resize(image.rows, std::vector<int>(image.cols, 0));
+    makeGrid();//必须先拿到栅格地图
+
 }
 
 ImageProcessor::~ImageProcessor()

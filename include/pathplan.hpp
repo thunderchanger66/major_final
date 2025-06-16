@@ -15,6 +15,7 @@ private:
 public:
     PathPlanner();
     void zigzagSweep();//之字形进行全覆盖路径
-    void showPath();//显示规划的路径
+    void showRawPath();//显示规划的原始断续路径
     //void BFSLabel();//进行地图分区，分成区域
+    std::vector<std::pair<int, int>> getPath() const { return path; } // 获取路径
 };
