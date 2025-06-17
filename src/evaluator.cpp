@@ -35,6 +35,7 @@ void Evaluator::beTheCar()
         {
             for(int dy = -3; dy <= 3; dy++)
             {
+                if(dx * dx + dy * dy > 9) continue; // 跳过不在半径内的点
                 if(dx != 0 || dy != 0)
                 {
                     visitedCar[x + dx][y + dy] = 1; // 标记为已访问
