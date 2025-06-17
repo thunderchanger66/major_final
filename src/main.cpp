@@ -4,7 +4,8 @@
 
 int main()
 {
-    start();
+    returnPath();
+
     return 0;
     //std::cout << "Hello, from major_final!\n";
 }

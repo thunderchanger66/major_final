@@ -1,6 +1,6 @@
 #include "pathplan.hpp"
 
-PathPlanner::PathPlanner() : ImageProcessor(9), rows(grid.size()), cols(grid[0].size())
+PathPlanner::PathPlanner() : ImageProcessor(11), rows(grid.size()), cols(grid[0].size())
 {
     makeGrid();//必须先拿到栅格地图
     makeDilatedGrid();//生成膨胀后的栅格地图，现在路径规划正式改用膨胀后的栅格地图
@@ -53,7 +53,7 @@ void PathPlanner::zigzagSweepRegion(int region_id)//这里只用膨胀之后的
     {
         if(i % 2 == 0) // 偶数行从左往右
         {
-            for(int j = 0; j < cols; j+=5) // 每5列进行一次
+            for(int j = 0; j < cols; j+=1) // 每5列进行一次//可调 
             {
                 if(dilatedgrid[i][j] == 0 && region[i][j] == region_id)
                 {
@@ -63,7 +63,7 @@ void PathPlanner::zigzagSweepRegion(int region_id)//这里只用膨胀之后的
         }
         else // 奇数行从右往左
         {
-            for(int j = cols - 1; j >= 0; j-=5) // 每5列进行一次
+            for(int j = cols - 1; j >= 0; j-=1) // 每5列进行一次
             {
                 if(dilatedgrid[i][j] == 0 && region[i][j] == region_id)
                 {

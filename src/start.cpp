@@ -4,7 +4,7 @@
 #include <vector>
 #include <utility>
 
-void start()
+returnpath returnPath()
 {
     PathPlanner pathPlanner;// 创建路径规划器对象
     pathPlanner.showGrid();// 显示网格地图
@@ -38,4 +38,7 @@ void start()
     astar.showAStarPath(fullPath, pathPlanner.grid);// 显示A*规划后的路径
 
     cv::waitKey(0);
+
+    return {fullPath, pathPlanner.grid}; // 返回完整路径和网格数据
+
 }
