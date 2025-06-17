@@ -14,6 +14,7 @@ add_executable(major_final
     src/astar.cpp
     src/start.cpp
     src/evaluator.cpp
+    src/pathtoworld.cpp
 )
 
 target_include_directories(major_final 
