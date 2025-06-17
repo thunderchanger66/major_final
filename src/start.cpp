@@ -47,5 +47,8 @@ void start()
 {
     Evaluator evaluator(returnPath()); // 创建评估器对象
     evaluator.beTheCar(); // 执行评估
+
+    evaluator.getCoverage(); // 获取覆盖率
+    evaluator.getRepeated(); // 获取重复率
     cv::waitKey(0); // 等待按键
 }

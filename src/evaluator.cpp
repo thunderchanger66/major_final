@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <iostream>
+#include <unordered_set>
 
 void Evaluator::beTheCar()
 {
@@ -39,6 +40,12 @@ void Evaluator::beTheCar()
                 if(dx != 0 || dy != 0)
                 {
                     visitedCar[x + dx][y + dy] = 1; // 标记为已访问
+
+                    // //插入到hash表，进行重复点的计数
+                    // auto [it, inserted] = repeatedSet.insert({x + dx, y + dy});
+                    // if(!inserted)
+                    //     repeatedCount++; // 如果插入失败，说明是重复点
+
                     finalShow.at<cv::Vec3b>(x + dx, y + dy) = cv::Vec3b(0, 0, 255); // 红色表示路径点
                 }
             }
@@ -56,7 +63,17 @@ void Evaluator::beTheCar()
                 coveredCount++; // 统计覆盖的点数
         }
     }
-    //for testing
+}
+
+void Evaluator::getCoverage()
+{
+    coverage = (coveredCount / emptyCount) * 100.0; // 计算覆盖率
     std::cout << "Empty Count: " << emptyCount << std::endl;
     std::cout << "Covered Count: " << coveredCount << std::endl;
+    std::cout << "Coverage: " << coverage << "%" << std::endl;
+}
+
+void Evaluator::getRepeated()
+{
+    std::cout << "Repeated Count: " << repeatedCount << std::endl;
 }
