@@ -34,6 +34,8 @@ ImageProcessor::ImageProcessor(int dilateSize)
 
     cv::namedWindow("Dilated Image", cv::WINDOW_NORMAL);
     cv::imshow("Dilated Image", dilated);
+
+    region.resize(image.rows, std::vector<int>(image.cols, -1)); // 初始化区域标记为-1
 }
 
 ImageProcessor::~ImageProcessor()
@@ -81,6 +83,24 @@ void ImageProcessor::makeDilatedGrid()
             else
                 dilatedgrid[i][j] = 1;//不可通行         
         }
+}
+
+//大概分成左右两块
+void ImageProcessor::gridRegion(const std::vector<std::vector<int>>& grid)
+{
+    int rows = grid.size();
+    int cols = grid[0].size();
+    for(int i = 0; i < rows; i++)
+    {
+        for(int j = 0; j < cols; j++)
+        {
+            if(grid[i][j] == 0 && region[i][j] == -1) // 如果是可通行区域且未被标记
+            {
+                int label = (j < cols / 2) ? 0 : 1; // 左半部分标记为0，右半部分标记为1
+                region[i][j] = label; // 标记区域
+            }
+        }
+    }
 }
 
 void ImageProcessor::showGrid()

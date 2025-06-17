@@ -20,6 +20,9 @@ public:
 
     void showGrid();//转成可视化图像，必须要先调用
 
+    std::vector<std::vector<int>> region;//区域标记数据，0左1右，-1不可
+    void gridRegion(const std::vector<std::vector<int>>& grid);
+
 private:
     cv::Mat image;// 源图
     cv::Mat dilated;// 膨胀后的图，需对障碍物进行膨胀处理

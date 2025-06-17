@@ -18,4 +18,6 @@ public:
     void showRawPath();//显示规划的原始断续路径
     //void BFSLabel();//进行地图分区，分成区域
     std::vector<std::pair<int, int>> getPath() const { return path; } // 获取路径
+
+    void zigzagSweepRegion(int region_id); // 对指定区域进行之字形规划
 };

@@ -8,7 +8,11 @@ void start()
 {
     PathPlanner pathPlanner;// 创建路径规划器对象
     pathPlanner.showGrid();// 显示网格地图
-    pathPlanner.zigzagSweep();//之字形规划原始断续路径
+    //pathPlanner.zigzagSweep();//之字形规划原始断续路径
+    //现在采用先大概分区的方法，暂时分了两个，左0右1
+    for(int i = 0; i < 2; i++)//先左后右
+        pathPlanner.zigzagSweepRegion(i);//对每个区域进行之字形规划
+
     std::vector<std::pair<int, int>> zigzagPath = pathPlanner.getPath();// 获取之字形路径
 
     // 进行A*路径规划
