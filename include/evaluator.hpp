@@ -17,7 +17,7 @@ public:
     finalShow(cv::Size(rp.grid[0].size(), rp.grid.size()), CV_8UC3, cv::Scalar(255, 255, 255)),
     visitedCar(rp.grid.size(), std::vector<int>(rp.grid[0].size(), -1)) {}
 
-    void beTheCar();
+    void beTheCar();// 变成车的大小，便于可视化实际情况并进行性能评估
     std::vector<std::vector<int>> visitedCar; // 访问标记，用于记录哪些点已经被访问过// -1表示不可访问，0表示可访问，1表示车经过
 
 private:
