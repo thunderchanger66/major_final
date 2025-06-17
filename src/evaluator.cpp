@@ -36,20 +36,26 @@ void Evaluator::beTheCar()
         {
             for(int dy = -3; dy <= 3; dy++)
             {
-                if(dx * dx + dy * dy > 9) continue; // 跳过不在半径内的点
+                if(dx * dx + dy * dy > 9) continue; // 跳过不在半径内的点，使其看起来更像一个圆形，注释掉则为方形
                 if(dx != 0 || dy != 0)
                 {
                     visitedCar[x + dx][y + dy] = 1; // 标记为已访问
 
-                    // //插入到hash表，进行重复点的计数
-                    // auto [it, inserted] = repeatedSet.insert({x + dx, y + dy});
-                    // if(!inserted)
-                    //     repeatedCount++; // 如果插入失败，说明是重复点
+                    //插入到hash表，进行重复点的计数
+                    auto [it, inserted] = repeatedSet.insert({x + dx, y + dy});
+                    if(!inserted)
+                        repeatedCount++; // 如果插入失败，说明是重复点
 
                     finalShow.at<cv::Vec3b>(x + dx, y + dy) = cv::Vec3b(0, 0, 255); // 红色表示路径点
                 }
             }
         }
+
+        //小车移动会重复计算上一个时刻与这一个时刻重复的点，也就是每次经过原始路径点一个像素的距离，这是不必要的，需要减去
+        //计算出单个车占像素29个，减去每次移动的7个像素
+        repeatedCount -= (29 - 7);
+        //方形小车测试
+        //repeatedCount -= (49 - 7); // 方形小车占49个像素，减去每次移动的7个像素
 
         cv::imshow("FinalShow", finalShow);
         cv::waitKey(1);
@@ -75,5 +81,7 @@ void Evaluator::getCoverage()
 
 void Evaluator::getRepeated()
 {
+    repeated = (repeatedCount / emptyCount) * 100.0; // 计算重复率
     std::cout << "Repeated Count: " << repeatedCount << std::endl;
+    std::cout << "Repeated: " << repeated << "%" << std::endl;
 }
