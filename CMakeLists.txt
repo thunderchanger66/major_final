@@ -13,6 +13,7 @@ add_executable(major_final
     src/pathplan.cpp
     src/astar.cpp
     src/start.cpp
+    src/evaluator.cpp
 )
 
 target_include_directories(major_final 

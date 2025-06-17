@@ -3,6 +3,7 @@
 #include "astar.hpp"
 #include <vector>
 #include <utility>
+#include "evaluator.hpp"
 
 returnpath returnPath()
 {
@@ -40,5 +41,11 @@ returnpath returnPath()
     cv::waitKey(0);
 
     return {fullPath, pathPlanner.grid}; // 返回完整路径和网格数据
+}
 
+void start()
+{
+    Evaluator evaluator(returnPath()); // 创建评估器对象
+    evaluator.beTheCar(); // 执行评估
+    cv::waitKey(0); // 等待按键
 }
