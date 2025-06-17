@@ -45,7 +45,8 @@ returnpath returnPath()
 
 void start()
 {
-    Evaluator evaluator(returnPath()); // 创建评估器对象
+    returnpath returnedPath = returnPath();//获得路径及原始栅格地图
+    Evaluator evaluator(returnedPath); // 创建评估器对象
     evaluator.beTheCar(); // 执行评估
 
     evaluator.getCoverage(); // 获取覆盖率
