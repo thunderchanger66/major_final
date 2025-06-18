@@ -12,3 +12,8 @@ void pathToWorld::pathtoworld()
         //std::cout << "World: (" << wx << ", " << wy << ")" << std::endl;
     }
 }
+
+void pathToWorld::discretePath()
+{
+    
+}
