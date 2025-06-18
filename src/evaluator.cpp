@@ -44,7 +44,11 @@ void Evaluator::beTheCar()
                     //插入到hash表，进行重复点的计数
                     auto [it, inserted] = repeatedSet.insert({x + dx, y + dy});
                     if(!inserted)
-                        repeatedCount++; // 如果插入失败，说明是重复点
+                        {
+                            repeatedCount++; // 如果插入失败，说明是重复点
+                            finalShow.at<cv::Vec3b>(x + dx, y + dy) = cv::Vec3b(0, 255, 0); // 红色表示路径点
+                            continue;
+                        }
 
                     finalShow.at<cv::Vec3b>(x + dx, y + dy) = cv::Vec3b(0, 0, 255); // 红色表示路径点
                 }
@@ -58,7 +62,7 @@ void Evaluator::beTheCar()
         //repeatedCount -= (49 - 7); // 方形小车占49个像素，减去每次移动的7个像素
 
         cv::imshow("FinalShow", finalShow);
-        cv::waitKey(1);//决定是否用这里仿真来显示 
+        //cv::waitKey(1);//决定是否用这里仿真来显示 
     }
     //统计覆盖的点数，用visitedCar数组
     for(int i = 0; i < visitedCar.size(); i++)
