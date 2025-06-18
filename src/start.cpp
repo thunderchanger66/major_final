@@ -4,6 +4,7 @@
 #include <vector>
 #include <utility>
 #include "evaluator.hpp"
+#include "pathtoworld.hpp"
 
 returnpath returnPath()
 {
@@ -51,5 +52,9 @@ void start()
 
     evaluator.getCoverage(); // 获取覆盖率
     evaluator.getRepeated(); // 获取重复率
+
+    pathToWorld pathtoworld(returnedPath.path);//转换到世界坐标系
+    pathtoworld.pathtoworld();//转换函数
+
     cv::waitKey(0); // 等待按键
 }

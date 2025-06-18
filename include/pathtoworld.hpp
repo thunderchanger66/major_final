@@ -6,7 +6,14 @@
 class pathToWorld
 {
 private:
+    //地图原点位置
+    const double originX = -0.37;
+    const double originY = -0.501;
+    const double resolution = 0.05;//一个像素在世界坐标系中是0.05m
 
+    std::vector<std::pair<int, int>> road;//传进来的原始路径
 public:
-    void pathtoworld(std::vector<std::pair<int, int>>& path);
+    pathToWorld(const std::vector<std::pair<int, int>>& road) : road(road) {}
+    std::vector<std::pair<int, int>> path;//换算到世界坐标系的路径
+    void pathtoworld();
 };
