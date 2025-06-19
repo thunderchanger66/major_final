@@ -65,7 +65,7 @@ void Evaluator::beTheCar()
         lastCarBody = std::move(thisCarBody);
 
         cv::imshow("FinalShow", finalShow);
-        cv::waitKey(1);
+        //cv::waitKey(1);
     }
     //统计覆盖的点数，用visitedCar数组
     for(int i = 0; i < visitedCar.size(); i++)

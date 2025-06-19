@@ -11,7 +11,7 @@ PathPlanner::PathPlanner() : ImageProcessor(9), rows(grid.size()), cols(grid[0].
 
 void PathPlanner::zigzagSweep()
 {
-    for(int i = 16; i < rows; i+=7)//这里i跳的行数和小车的大小有关
+    for(int i = 2; i < rows; i+=7)//这里i跳的行数和小车的大小有关
     {
         //偶数行从左往右，否则从右往左
         if(i % 2 == 0)//这里的j++和j--为了消去一些点

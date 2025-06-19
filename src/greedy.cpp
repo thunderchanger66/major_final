@@ -58,7 +58,7 @@ std::vector<std::pair<int, int>> greedy::greedyPath()
     pathVisitd[curr] = true;
 
     //calculatedistance();//先算距離矩陣
-    calculateEUdis();
+    calculateEUdis();//現在先使用的是歐式距離，每行直接不離散點測試
 
     for(int step = 1; step < n; ++step)
     {
