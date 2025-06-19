@@ -11,12 +11,12 @@ PathPlanner::PathPlanner() : ImageProcessor(9), rows(grid.size()), cols(grid[0].
 
 void PathPlanner::zigzagSweep()
 {
-    for(int i = 0; i < rows; i+=9)//这里i跳的行数和小车的大小有关
+    for(int i = 16; i < rows; i+=7)//这里i跳的行数和小车的大小有关
     {
         //偶数行从左往右，否则从右往左
         if(i % 2 == 0)//这里的j++和j--为了消去一些点
         {
-            for(int j = 0; j < cols; j+=5)
+            for(int j = 0; j < cols; j+=7)
             {
                 if(dilatedgrid[i][j] == 0 && !visited[i][j])
                 {
@@ -31,7 +31,7 @@ void PathPlanner::zigzagSweep()
         }
         else
         {
-            for(int j = cols - 1; j >= 0; j-=5)
+            for(int j = cols - 1; j >= 0; j-=7)
             {
                 if(dilatedgrid[i][j] == 0 && !visited[i][j])
                 {
@@ -49,11 +49,11 @@ void PathPlanner::zigzagSweepRegion(int region_id)//这里只用膨胀之后的
     int rows = dilatedgrid.size();
     int cols = dilatedgrid[0].size();
 
-    for(int i = 2; i < rows; i+=7) // 每7行进行一次之字形规划
+    for(int i = 16; i < rows; i+=7) // 每7行进行一次之字形规划
     {
         if(i % 2 == 0) // 偶数行从左往右
         {
-            for(int j = 0; j < cols; j+=1) // 每5列进行一次//可调 
+            for(int j = 0; j < cols; j+=7) // 每5列进行一次//可调 
             {
                 if(dilatedgrid[i][j] == 0 && region[i][j] == region_id)
                 {
@@ -63,7 +63,7 @@ void PathPlanner::zigzagSweepRegion(int region_id)//这里只用膨胀之后的
         }
         else // 奇数行从右往左
         {
-            for(int j = cols - 1; j >= 0; j-=1) // 每5列进行一次
+            for(int j = cols - 1; j >= 0; j-=7) // 每5列进行一次
             {
                 if(dilatedgrid[i][j] == 0 && region[i][j] == region_id)
                 {
