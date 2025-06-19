@@ -4,51 +4,102 @@
 #include <queue>
 #include <algorithm>
 #include <opencv2/opencv.hpp>
+#include <memory>
+
+// std::vector<std::pair<int, int>> Astar::findPath(const std::vector<std::vector<int>>& grid, std::pair<int, int> start, std::pair<int, int> goal)
+// {
+//     int rows = grid.size();
+//     int cols = grid[0].size();
+//     std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false)); // 已经访问
+//     std::priority_queue<Node*, std::vector<Node*>, CompareNode> open; // 优先队列
+
+//     Node* startNode = new Node{start.first, start.second, 0, heuristic(start, goal), nullptr};// 创建起点节点
+//     open.push(startNode);
+
+//     while(!open.empty())
+//     {
+//         Node* current = open.top();// 获取当前节点
+//         open.pop();// 弹出当前节点
+//         int x = current->x, y = current->y;
+//         if(visited[x][y]) continue; // 如果已经访问过，跳过
+//         visited[x][y] = true;// 已经访问
+
+//         if(x == goal.first && y == goal.second) //如果到达目标节点
+//         {
+//             std::vector<std::pair<int, int>> path;
+//             while(current)//回溯路径
+//             {
+//                 path.emplace_back(current->x, current->y);
+//                 current = current->parent;//回溯到父节点
+//             }
+//             std::reverse(path.begin(), path.end());//反转路径
+//             return path;
+//         }
+
+//         // 遍历四个方向
+//         for(int i = 0; i < 4; i++)
+//         {
+//             int nx = x + dx[i];//新的x坐标
+//             int ny = y + dy[i];//新的y坐标
+//             if(inbounds(nx, ny, rows, cols) && !grid[nx][ny] && !visited[nx][ny])//如果在边界内并且没有访问过且可通行
+//             {
+//                 Node* neighbor = new Node{nx, ny, current->g + 1, heuristic({nx, ny}, goal), current};//创建邻居节点
+//                 open.push(neighbor);//加入优先队列
+//             }
+//         }
+//     }
+
+//     return {};// 如果没有路径，返回空
+// }
 
 std::vector<std::pair<int, int>> Astar::findPath(const std::vector<std::vector<int>>& grid, std::pair<int, int> start, std::pair<int, int> goal)
 {
     int rows = grid.size();
     int cols = grid[0].size();
-    std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false)); // 已经访问
-    std::priority_queue<Node*, std::vector<Node*>, CompareNode> open; // 优先队列
+    std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false));
+    std::priority_queue<Node*, std::vector<Node*>, CompareNode> open;
 
-    Node* startNode = new Node{start.first, start.second, 0, heuristic(start, goal), nullptr};// 创建起点节点
-    open.push(startNode);
+    // 用于管理所有节点的生命周期
+    std::vector<std::unique_ptr<Node>> allNodes;
+
+    auto startNode = std::make_unique<Node>(Node{start.first, start.second, 0, heuristic(start, goal), nullptr});
+    open.push(startNode.get());
+    allNodes.push_back(std::move(startNode));
 
     while(!open.empty())
     {
-        Node* current = open.top();// 获取当前节点
-        open.pop();// 弹出当前节点
+        Node* current = open.top();
+        open.pop();
         int x = current->x, y = current->y;
-        if(visited[x][y]) continue; // 如果已经访问过，跳过
-        visited[x][y] = true;// 已经访问
+        if(visited[x][y]) continue;
+        visited[x][y] = true;
 
-        if(x == goal.first && y == goal.second) //如果到达目标节点
+        if(x == goal.first && y == goal.second)
         {
             std::vector<std::pair<int, int>> path;
-            while(current)//回溯路径
+            while(current)
             {
                 path.emplace_back(current->x, current->y);
-                current = current->parent;//回溯到父节点
+                current = current->parent;
             }
-            std::reverse(path.begin(), path.end());//反转路径
-            return path;
+            std::reverse(path.begin(), path.end());
+            return path; // allNodes 自动释放
         }
 
-        // 遍历四个方向
         for(int i = 0; i < 4; i++)
         {
-            int nx = x + dx[i];//新的x坐标
-            int ny = y + dy[i];//新的y坐标
-            if(inbounds(nx, ny, rows, cols) && !grid[nx][ny] && !visited[nx][ny])//如果在边界内并且没有访问过且可通行
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if(inbounds(nx, ny, rows, cols) && !grid[nx][ny] && !visited[nx][ny])
             {
-                Node* neighbor = new Node{nx, ny, current->g + 1, heuristic({nx, ny}, goal), current};//创建邻居节点
-                open.push(neighbor);//加入优先队列
+                auto neighbor = std::make_unique<Node>(Node{nx, ny, current->g + 1, heuristic({nx, ny}, goal), current});
+                open.push(neighbor.get());
+                allNodes.push_back(std::move(neighbor));
             }
         }
     }
 
-    return {};// 如果没有路径，返回空
+    return {};
 }
 
 void Astar::showAStarPath(const std::vector<std::pair<int, int>>& path, const std::vector<std::vector<int>>& grid)

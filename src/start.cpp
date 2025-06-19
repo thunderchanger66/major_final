@@ -5,6 +5,7 @@
 #include <utility>
 #include "evaluator.hpp"
 #include "pathtoworld.hpp"
+#include "greedy.hpp"
 
 returnpath returnPath()
 {
@@ -18,6 +19,11 @@ returnpath returnPath()
     std::vector<std::pair<int, int>> zigzagPath = pathPlanner.getPath();// 获取之字形路径
     std::vector<std::vector<int>> dilategrid = pathPlanner.dilatedgrid;// 獲取膨脹的地圖
 
+    //新加貪心最近鄰
+    greedy Greedy(zigzagPath, dilategrid);
+    std::vector<std::pair<int, int>> greedypath = Greedy.greedyPath();
+
+    //下面都改成greedy后的path
     // 进行A*路径规划
     Astar astar;// 创建A*路径规划对象
     std::vector<std::pair<int, int>> fullPath;// 存储完整路径
