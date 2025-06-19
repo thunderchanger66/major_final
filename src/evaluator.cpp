@@ -62,7 +62,7 @@ void Evaluator::beTheCar()
         //repeatedCount -= (49 - 7); // 方形小车占49个像素，减去每次移动的7个像素
 
         cv::imshow("FinalShow", finalShow);
-        //cv::waitKey(1);//决定是否用这里仿真来显示 
+        cv::waitKey(1);//决定是否用这里仿真来显示 
     }
     //统计覆盖的点数，用visitedCar数组
     for(int i = 0; i < visitedCar.size(); i++)

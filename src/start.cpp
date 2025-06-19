@@ -27,15 +27,15 @@ returnpath returnPath()
     // 进行A*路径规划
     Astar astar;// 创建A*路径规划对象
     std::vector<std::pair<int, int>> fullPath;// 存储完整路径
-    for(int i = 0; i < zigzagPath.size(); i++)
+    for(int i = 0; i < greedypath.size(); i++)
     {
         if(i == 0)
         {
-            fullPath.push_back(zigzagPath[i]);// 第一个点直接加入
+            fullPath.push_back(greedypath[i]);// 第一个点直接加入
             continue;
         }
         // 对于后续点，使用A*算法连接前后点
-        std::vector<std::pair<int, int>> subPath = astar.findPath(dilategrid, zigzagPath[i - 1], zigzagPath[i]);
+        std::vector<std::pair<int, int>> subPath = astar.findPath(dilategrid, greedypath[i - 1], greedypath[i]);
         if(!subPath.empty())
         {
             //如果找到路径，将其加入完整路径中
