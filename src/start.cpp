@@ -16,6 +16,7 @@ returnpath returnPath()
     //     pathPlanner.zigzagSweepRegion(i);//对每个区域进行之字形规划
 
     std::vector<std::pair<int, int>> zigzagPath = pathPlanner.getPath();// 获取之字形路径
+    std::vector<std::vector<int>> dilategrid = pathPlanner.dilatedgrid;// 獲取膨脹的地圖
 
     // 进行A*路径规划
     Astar astar;// 创建A*路径规划对象
@@ -28,7 +29,7 @@ returnpath returnPath()
             continue;
         }
         // 对于后续点，使用A*算法连接前后点
-        std::vector<std::pair<int, int>> subPath = astar.findPath(pathPlanner.dilatedgrid, zigzagPath[i - 1], zigzagPath[i]);
+        std::vector<std::pair<int, int>> subPath = astar.findPath(dilategrid, zigzagPath[i - 1], zigzagPath[i]);
         if(!subPath.empty())
         {
             //如果找到路径，将其加入完整路径中

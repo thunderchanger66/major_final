@@ -15,6 +15,7 @@ add_executable(major_final
     src/start.cpp
     src/evaluator.cpp
     src/pathtoworld.cpp
+    src/greedy.cpp
 )
 
 target_include_directories(major_final 

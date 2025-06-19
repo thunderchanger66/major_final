@@ -6,7 +6,7 @@ PathPlanner::PathPlanner() : ImageProcessor(9), rows(grid.size()), cols(grid[0].
     makeDilatedGrid();//生成膨胀后的栅格地图，现在路径规划正式改用膨胀后的栅格地图
     visited.resize(dilatedgrid.size(), std::vector<bool>(dilatedgrid[0].size(), false));
 
-    gridRegion(dilatedgrid); // 对膨胀后的栅格地图进行区域标记
+    //gridRegion(dilatedgrid); // 对膨胀后的栅格地图进行区域标记
 }
 
 void PathPlanner::zigzagSweep()
@@ -16,7 +16,7 @@ void PathPlanner::zigzagSweep()
         //偶数行从左往右，否则从右往左
         if(i % 2 == 0)//这里的j++和j--为了消去一些点
         {
-            for(int j = 0; j < cols; j+=5)
+            for(int j = 0; j < cols; j+=7)
             {
                 if(dilatedgrid[i][j] == 0 && !visited[i][j])
                 {
@@ -31,7 +31,7 @@ void PathPlanner::zigzagSweep()
         }
         else
         {
-            for(int j = cols - 1; j >= 0; j-=5)
+            for(int j = cols - 1; j >= 0; j-=7)
             {
                 if(dilatedgrid[i][j] == 0 && !visited[i][j])
                 {
