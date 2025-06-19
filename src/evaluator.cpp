@@ -46,8 +46,8 @@ void Evaluator::beTheCar()
                     if(!inserted)
                         {
                             repeatedCount++; // 如果插入失败，说明是重复点
-                            //finalShow.at<cv::Vec3b>(x + dx, y + dy) = cv::Vec3b(0, 255, 0); // 绿色表示重复的点
-                            //continue;
+                            finalShow.at<cv::Vec3b>(x + dx, y + dy) = cv::Vec3b(0, 255, 0); // 绿色表示重复的点
+                            continue;
                         }
 
                     finalShow.at<cv::Vec3b>(x + dx, y + dy) = cv::Vec3b(0, 0, 255); // 红色表示路径点

@@ -6,7 +6,7 @@ PathPlanner::PathPlanner() : ImageProcessor(9), rows(grid.size()), cols(grid[0].
     makeDilatedGrid();//生成膨胀后的栅格地图，现在路径规划正式改用膨胀后的栅格地图
     visited.resize(dilatedgrid.size(), std::vector<bool>(dilatedgrid[0].size(), false));
 
-    //gridRegion(dilatedgrid); // 对膨胀后的栅格地图进行区域标记
+    gridRegion(dilatedgrid); // 对膨胀后的栅格地图进行区域标记
 }
 
 void PathPlanner::zigzagSweep()
@@ -49,11 +49,11 @@ void PathPlanner::zigzagSweepRegion(int region_id)//这里只用膨胀之后的
     int rows = dilatedgrid.size();
     int cols = dilatedgrid[0].size();
 
-    for(int i = 2; i < rows; i+=7) // 每7行进行一次之字形规划
+    for(int i = 16; i < rows; i+=7) // 每7行进行一次之字形规划
     {
         if(i % 2 == 0) // 偶数行从左往右
         {
-            for(int j = 0; j < cols; j+=1) // 每5列进行一次//可调 
+            for(int j = 0; j < cols; j+=7) // 每5列进行一次//可调 
             {
                 if(dilatedgrid[i][j] == 0 && region[i][j] == region_id)
                 {
@@ -63,7 +63,7 @@ void PathPlanner::zigzagSweepRegion(int region_id)//这里只用膨胀之后的
         }
         else // 奇数行从右往左
         {
-            for(int j = cols - 1; j >= 0; j-=1) // 每5列进行一次
+            for(int j = cols - 1; j >= 0; j-=7) // 每5列进行一次
             {
                 if(dilatedgrid[i][j] == 0 && region[i][j] == region_id)
                 {
