@@ -22,4 +22,6 @@ private:
     void calculatedistance();
     std::vector<std::vector<int>> distanceMatrix;
     int n;//原始路徑長度
+
+    void calculateEUdis();
 };

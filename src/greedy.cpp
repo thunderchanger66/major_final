@@ -57,7 +57,8 @@ std::vector<std::pair<int, int>> greedy::greedyPath()
     greedypath.emplace_back(path[curr]);
     pathVisitd[curr] = true;
 
-    calculatedistance();//先算距離矩陣
+    //calculatedistance();//先算距離矩陣
+    calculateEUdis();
 
     for(int step = 1; step < n; ++step)
     {
@@ -88,7 +89,7 @@ void greedy::calculatedistance()
 {
     n = path.size();
     distanceMatrix.resize(n, std::vector<int>(n, INT_MAX));
-    int max_dist_threshold = 50;//最大跳數限制
+    //int max_dist_threshold = 50;//最大跳數限制
 
     #pragma omp parallel for collapse(2)
     for (int i = 0; i < n; ++i)
@@ -110,6 +111,23 @@ void greedy::calculatedistance()
                     distanceMatrix[j][i] = len;
                 }
             }
+        }
+    }
+}
+
+//要不直接用歐氏距離試一下
+void greedy::calculateEUdis()
+{
+    n = path.size();
+    distanceMatrix.resize(n, std::vector<int>(n, INT_MAX));
+    double euclidean = -1.0;
+
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            euclidean = hypot(path[i].first - path[j].first, path[i].second - path[j].second);
+            distanceMatrix[i][j] = euclidean;
         }
     }
 }
