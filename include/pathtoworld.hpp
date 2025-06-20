@@ -20,4 +20,7 @@ public:
 
     std::vector<std::pair<double, double>> discretepath;
     void discretePath();
+    
+    //嘗試根據曲率來判定點
+    void curvedisPath();
 };

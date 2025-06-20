@@ -54,15 +54,16 @@ returnpath returnPath()
 void start()
 {
     returnpath returnedPath = returnPath();//获得路径及原始栅格地图
+    
     Evaluator evaluator(returnedPath); // 创建评估器对象
     evaluator.beTheCar(); // 执行评估
-
     evaluator.getCoverage(); // 获取覆盖率
     evaluator.getRepeated(); // 获取重复率
 
     pathToWorld pathtoworld(returnedPath.path);//转换到世界坐标系
     pathtoworld.pathtoworld();//转换函数
-    pathtoworld.discretePath();//离散路径点
+    //pathtoworld.discretePath();//离散路径点
+    pathtoworld.curvedisPath();//曲率離散路徑
 
     cv::waitKey(0); // 等待按键
 }
