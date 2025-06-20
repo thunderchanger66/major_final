@@ -62,6 +62,7 @@ void start()
 
     pathToWorld pathtoworld(returnedPath.path);//转换到世界坐标系
     pathtoworld.pathtoworld();//转换函数
+    pathtoworld.discretePath();//离散路径点
 
     cv::waitKey(0); // 等待按键
 }

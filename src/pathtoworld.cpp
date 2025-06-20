@@ -13,7 +13,19 @@ void pathToWorld::pathtoworld()
     }
 }
 
+//简单等数量路径点离散
 void pathToWorld::discretePath()
 {
-    
+    discretepath.clear();
+    int count = 0;
+    for(int i = 0; i < path.size(); i++)
+    {
+        if(i % 5 == 0)
+        {
+            discretepath.emplace_back(path[i].first, path[i].second);
+            std::cout << "World: (" << path[i].first << "," << path[i].second << ")" << std::endl;
+            count++;
+        }
+    }
+    std::cout << "Count: " << count << std::endl;
 }
