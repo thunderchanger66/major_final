@@ -53,12 +53,23 @@ void pathToWorld::curvedisPath()
     };
 
     discretepath.emplace_back(path[0]);//直接加入第一個點
+    std::cout << "World: (" << path[0].first << "," << path[0].second << ")" << std::endl;
     count++;
+    int flag = 0;//插值标记 
     for(int i = 1; i < path.size() - 1; i++)//從第二個點到倒數第二個點
     {
         double angle = calAngle(path[i - 1], path[i], path[i + 1]);
         if(angle < CV_PI * 0.1)//接近直綫的路徑點會直接跳過
-            continue;
+            {
+                flag++;
+                if(flag % 10 == 0)//每隔10个点取一个点
+                {
+                    discretepath.emplace_back(path[i]);
+                    std::cout << "World: (" << path[i].first << "," << path[i].second << ")" << std::endl;
+                    count++;
+                }
+                continue;
+            }
         else
         {
             discretepath.emplace_back(path[i]);
@@ -77,7 +88,14 @@ void pathToWorld::curvedisPath()
     cv::namedWindow("Discrete Path", cv::WINDOW_NORMAL);
     cv::Mat img = cv::Mat::zeros(cv::Size(1600, 700), CV_8UC3);//改了上面path的wx和wy后，這裏也要同步修改
     for(const auto& p : discretepath)
-        cv::circle(img, cv::Point(p.first * 100, p.second * 100), 3, cv::Scalar(0, 0, 255), -1);
+    {
+        cv::Point pt(p.first * 100, p.second * 100);
+        cv::circle(img, pt, 3, cv::Scalar(0, 0, 255), -1);
+
+        // 显示坐标文本
+        // std::string text = "(" + std::to_string(p.first) + ", " + std::to_string(p.second) + ")";
+        // cv::putText(img, text, pt + cv::Point(5, -5), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 1);
+    }
 
     for(int i = 1; i < discretepath.size(); i++) 
     {
@@ -85,7 +103,16 @@ void pathToWorld::curvedisPath()
             cv::Point(discretepath[i].first * 100, discretepath[i].second * 100),
             cv::Scalar(0, 255, 0), 2);
         cv::imshow("Discrete Path", img);
-        cv::waitKey(100);
+        //cv::waitKey(100);
     }
 
+}
+
+void pathToWorld::outToCSV()
+{
+    //fout << "x,y\n"; // CSV表头
+    for(const auto& p : discretepath)
+    {
+        fout << p.second - 6.8 - 0.05 << "," << p.first - 16 << "\n";
+    }
 }

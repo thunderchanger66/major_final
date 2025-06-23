@@ -60,10 +60,11 @@ void start()
     evaluator.getCoverage(); // 获取覆盖率
     evaluator.getRepeated(); // 获取重复率
 
-    pathToWorld pathtoworld(returnedPath.path);//转换到世界坐标系
+    pathToWorld pathtoworld(returnedPath.path, "output.csv");//转换到世界坐标系
     pathtoworld.pathtoworld();//转换函数
     //pathtoworld.discretePath();//离散路径点
     pathtoworld.curvedisPath();//曲率離散路徑
+    pathtoworld.outToCSV();//输出到CSV使用
 
     cv::waitKey(0); // 等待按键
 }
