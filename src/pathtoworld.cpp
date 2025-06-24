@@ -61,13 +61,13 @@ void pathToWorld::curvedisPath()
         double angle = calAngle(path[i - 1], path[i], path[i + 1]);
         if(angle < CV_PI * 0.1)//接近直綫的路徑點會直接跳過
             {
-                flag++;
-                if(flag % 10 == 0)//每隔10个点取一个点
-                {
-                    discretepath.emplace_back(path[i]);
-                    std::cout << "World: (" << path[i].first << "," << path[i].second << ")" << std::endl;
-                    count++;
-                }
+                // flag++;
+                // if(flag % 10 == 0)//每隔10个点取一个点
+                // {
+                //     discretepath.emplace_back(path[i]);
+                //     std::cout << "World: (" << path[i].first << "," << path[i].second << ")" << std::endl;
+                //     count++;
+                // }
                 continue;
             }
         else
@@ -113,6 +113,6 @@ void pathToWorld::outToCSV()
     //fout << "x,y\n"; // CSV表头
     for(const auto& p : discretepath)
     {
-        fout << p.second - 6.8 - 0.05 << "," << p.first - 16 << "\n";
+        fout << p.second - 6.8 - 0.05 << "," << p.first - 16 + 0.1 << "\n";
     }
 }
